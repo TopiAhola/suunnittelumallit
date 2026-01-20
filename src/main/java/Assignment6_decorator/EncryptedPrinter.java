@@ -17,7 +17,7 @@ public class EncryptedPrinter extends PrinterDecorator{
         try {
             SecureRandom secureRandom = new SecureRandom();
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(128);
+            keyGenerator.init(128, secureRandom);
             this.secretKey = keyGenerator.generateKey();
 
             //print key
