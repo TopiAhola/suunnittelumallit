@@ -3,7 +3,7 @@ package Assingment4_observer;
 public class Main {
     public static void main(String[] args) {
 
-        WeatherStation wStation = new WeatherStation(15_000_000_000L);
+        WeatherStation wStation = new WeatherStation(15_000L);
 
         Observer obs1 = new Observer("Observer 1");
         Observer obs2 = new Observer("Observer 2");

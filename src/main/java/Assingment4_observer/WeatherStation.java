@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class WeatherStation extends Thread{
 
-    private long runTimeNanoSeconds;
+    private long runTimeMilliSeconds;
     private double temperature;
     private ArrayList<Observer> observers;
 
-    public WeatherStation(long runTimeNanoSeconds){
-        this.runTimeNanoSeconds = runTimeNanoSeconds;
+    public WeatherStation(long runTimeMilliSeconds){
+        this.runTimeMilliSeconds = runTimeMilliSeconds;
         this.temperature = (Math.random() * 80) - 40;
         this.observers = new ArrayList<Observer>();
     }
@@ -28,17 +28,17 @@ public class WeatherStation extends Thread{
     @Override
     public void run() {
         try {
-            long startTime = System.nanoTime();
+            long startTime = System.currentTimeMillis();
             long timePassed = 0;
-            while(this.runTimeNanoSeconds > timePassed) {
-                timePassed = System.nanoTime() - startTime;
+            while(this.runTimeMilliSeconds > timePassed) {
+                timePassed = System.currentTimeMillis() - startTime;
 
                 double maxTemp = 40.0;
                 double minTemp = -40.0;
                 this.temperature += (Math.random() * 2.0) -1;
                 this.temperature = Math.max(minTemp, Math.min(maxTemp, this.temperature));
 
-                System.out.println("Weather station temperature: " + this.temperature);
+                System.out.println("Weather station temperature: " + this.temperature + ". Time passed: " +timePassed+"ms.");
                 for (Observer o : this.observers) {
                     o.update(this.temperature);
                 }
