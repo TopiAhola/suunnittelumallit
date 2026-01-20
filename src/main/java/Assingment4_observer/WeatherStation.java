@@ -16,10 +16,12 @@ public class WeatherStation extends Thread{
 
     public void addObserver(Observer observer){
         this.observers.add(observer);
+        System.out.println("Added observer "+observer.getName());
     }
 
     public void removeObserver(Observer observer){
-        this.observers.add(observer);
+        this.observers.remove(observer);
+        System.out.println("Removed observer "+observer.getName());
     }
 
 
