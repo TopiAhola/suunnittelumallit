@@ -1,4 +1,4 @@
-package Assingment4_observer;
+package Assignment4_observer;
 
 public class Observer {
 

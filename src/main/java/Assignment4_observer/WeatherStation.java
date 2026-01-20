@@ -1,27 +1,34 @@
-package Assingment4_observer;
+package Assignment4_observer;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Collections.*;
+import java.util.List;
 
 public class WeatherStation extends Thread{
 
     private long runTimeMilliSeconds;
     private double temperature;
-    private ArrayList<Observer> observers;
+    private List<Observer> observers;
 
     public WeatherStation(long runTimeMilliSeconds){
         this.runTimeMilliSeconds = runTimeMilliSeconds;
         this.temperature = (Math.random() * 80) - 40;
-        this.observers = new ArrayList<Observer>();
+        this.observers = Collections.synchronizedList(new ArrayList<Observer>());
     }
 
     public void addObserver(Observer observer){
-        this.observers.add(observer);
-        System.out.println("Added observer "+observer.getName());
+        synchronized (this.observers) {
+            this.observers.add(observer);
+            System.out.println("Added observer " + observer.getName());
+        }
     }
 
     public void removeObserver(Observer observer){
-        this.observers.remove(observer);
-        System.out.println("Removed observer "+observer.getName());
+        synchronized (this.observers) {
+            this.observers.remove(observer);
+            System.out.println("Removed observer " + observer.getName());
+        }
     }
 
 
@@ -39,8 +46,11 @@ public class WeatherStation extends Thread{
                 this.temperature = Math.max(minTemp, Math.min(maxTemp, this.temperature));
 
                 System.out.println("Weather station temperature: " + this.temperature + ". Time passed: " +timePassed+"ms.");
-                for (Observer o : this.observers) {
-                    o.update(this.temperature);
+
+                synchronized (this.observers) {
+                    for (Observer o : this.observers) {
+                        o.update(this.temperature);
+                    }
                 }
                 Thread.sleep((long)(1000 + (Math.random()*2000)) );
             }
