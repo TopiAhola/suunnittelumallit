@@ -2,7 +2,7 @@ package Assignment6_decorator;
 
 public class PrinterDecorator implements Printer{
 
-    private Printer printer;
+    public Printer printer;
 
     public PrinterDecorator(Printer printer){
         this.printer = printer;
