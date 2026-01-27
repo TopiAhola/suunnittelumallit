@@ -1,10 +1,12 @@
 package Assignment9_strategy;
 
 public class BubbleSort implements Algorithm {
+
+    @Override
     public int[] sort(int[] array) {
-        System.out.println("Bubble Sort");
-        boolean finished = false;
-        while (!finished) {
+        System.out.println("Bubble sort");
+        boolean finished;
+        do  {
             finished = true;
             for (int i = 1; i < array.length; i++) {
                 if (array[i - 1] > array[i]) {
@@ -14,8 +16,8 @@ public class BubbleSort implements Algorithm {
                     finished = false;
                 }
             }
+        } while (!finished);
 
-        }
         return array;
     }
 
