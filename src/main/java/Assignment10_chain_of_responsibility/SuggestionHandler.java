@@ -9,7 +9,7 @@ public class SuggestionHandler extends MessageHandler {
     @Override
     public String handle(Message message) {
         if(message.getMessageType().equals(Message.MessageType.DEVELOPMENT_SUGGESTION)) {
-            return "Thank you for your feedback." ;
+            return "We will consider your suggestion to: " +message.getMessageContent() ;
 
         } else if (this.next != null) {
             return this.next.handle(message);
