@@ -45,7 +45,8 @@ public class Controller {
 
     public void undo() {
         if (!history.isEmpty()) {
-            System.out.println("Memento found in history");
+            System.out.println(currentHistoryIndex);
+            //System.out.println("Memento found in history");
 
             //step 1 index to past
             if(currentHistoryIndex > 0 ) {
@@ -65,20 +66,22 @@ public class Controller {
     public void redo() {
         if (!history.isEmpty()) {
 
+            System.out.println(currentHistoryIndex);
+
             //step 1 index to future
-            if(currentHistoryIndex >= 0 &&  currentHistoryIndex < history.size() -1 ) {
+            if(currentHistoryIndex >= 0 && currentHistoryIndex < history.size() -1 ) {
                 currentHistoryIndex = currentHistoryIndex + 1;
 
                 System.out.println("Memento found in future history");
-                IMemento nextState = history.get(currentHistoryIndex);
-
-                model.restoreState(nextState);
-                gui.updateGui();
-
 
             } else {
                 System.out.println("No more future history");
             }
+
+            IMemento nextState = history.get(currentHistoryIndex);
+            model.restoreState(nextState);
+            gui.updateGui();
+
 
         } else  {
             System.out.println("No history");
@@ -90,10 +93,14 @@ public class Controller {
     private void saveToHistory() {
         IMemento currentState = model.createMemento();
 
-        //erase redo states if they exist
+        //erase future redo states if they exist
         if (currentHistoryIndex < history.size() - 1) {
+            List<IMemento> removeThese = history.subList(currentHistoryIndex + 1, history.size());
+            for(IMemento memento : removeThese) {
+                history.remove(memento);
+            }
 
-            history = new ArrayList<>(history.subList(0, currentHistoryIndex + 1));
+            //history = new ArrayList<>(history.subList(0, currentHistoryIndex + 1));
 
              //remove indexes bigger than current
             //history.listIterator(currentHistoryIndex + 1).forEachRemaining(history::remove);
