@@ -17,12 +17,13 @@ public class Controller {
     }
 
     public void setOption(int optionNumber, int choice) {
-         //save initial state if not saved
+ /*        //save initial state if not saved
         if(history.isEmpty()){
             saveToHistory();
-        }
+        }*/
         model.setOption(optionNumber, choice);
         saveToHistory();
+        gui.updateGui();
     }
 
     public int getOption(int optionNumber) {
@@ -30,13 +31,14 @@ public class Controller {
     }
 
     public void setIsSelected(boolean isSelected) {
-        //save initial state if not saved
+ /*       //save initial state if not saved
         if(history.isEmpty()){
             saveToHistory();
-        }
+        }*/
         model.setIsSelected(isSelected);
         //save modified state
         saveToHistory();
+        gui.updateGui();
     }
 
     public boolean getIsSelected() {
@@ -45,34 +47,36 @@ public class Controller {
 
     public void undo() {
         if (!history.isEmpty()) {
-            System.out.println(currentHistoryIndex);
-            //System.out.println("Memento found in history");
 
             //step 1 index to past
             if(currentHistoryIndex > 0 ) {
                 currentHistoryIndex = currentHistoryIndex - 1;
-            }
-            IMemento previousState = history.get(currentHistoryIndex);
+                System.out.println("Sep back to: "+ currentHistoryIndex);
 
-            model.restoreState(previousState);
-            gui.updateGui();
+
+                IMemento previousState = history.get(currentHistoryIndex);
+
+                model.restoreState(previousState);
+
+
+            } else{
+                System.out.println("index is 0: " + currentHistoryIndex);
+            }
 
         } else  {
             System.out.println("No history");
-            currentHistoryIndex = 0;
         }
+        gui.updateGui();
     }
 
     public void redo() {
         if (!history.isEmpty()) {
 
-            System.out.println(currentHistoryIndex);
-
             //step 1 index to future
-            if(currentHistoryIndex >= 0 && currentHistoryIndex < history.size() -1 ) {
+            if(currentHistoryIndex < history.size() -1 ) {
                 currentHistoryIndex = currentHistoryIndex + 1;
 
-                System.out.println("Memento found in future history");
+                System.out.println("Step forward to: " + currentHistoryIndex);
 
             } else {
                 System.out.println("No more future history");
@@ -80,13 +84,11 @@ public class Controller {
 
             IMemento nextState = history.get(currentHistoryIndex);
             model.restoreState(nextState);
-            gui.updateGui();
-
 
         } else  {
             System.out.println("No history");
-            currentHistoryIndex = 0;
         }
+        gui.updateGui();
     }
 
 
@@ -95,19 +97,15 @@ public class Controller {
 
         //erase future redo states if they exist
         if (currentHistoryIndex < history.size() - 1) {
-            List<IMemento> removeThese = history.subList(currentHistoryIndex + 1, history.size());
-            for(IMemento memento : removeThese) {
-                history.remove(memento);
-            }
 
-            //history = new ArrayList<>(history.subList(0, currentHistoryIndex + 1));
-
-             //remove indexes bigger than current
-            //history.listIterator(currentHistoryIndex + 1).forEachRemaining(history::remove);
+            //remove from end of list
+            System.out.println("Remove from history: " + (currentHistoryIndex+1) + " - " + (history.size()-1) );
+            history.subList(currentHistoryIndex + 1, history.size()).clear();
         }
 
         //
         history.add(currentState);
         currentHistoryIndex = history.size()-1;
+        System.out.println("Added history index: " + currentHistoryIndex +" history size: " +history.size());
     }
 }
