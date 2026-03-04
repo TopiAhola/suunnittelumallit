@@ -18,6 +18,14 @@ public class Controller {
         this.currentHistoryIndex = 0;
     }
 
+    public Map<Integer,IMemento> getHistory(){
+        return this.history;
+    }
+
+    public int getCurrentHistoryIndex() {
+        return currentHistoryIndex;
+    }
+
     public void setOption(int optionNumber, int choice) {
  /*        //save initial state if not saved
         if(history.isEmpty()){
@@ -46,6 +54,12 @@ public class Controller {
     public boolean getIsSelected() {
         return model.getIsSelected();
     }
+
+    public void loadHistory(int index){
+        System.out.println("loadHistory: "+index);
+    }
+
+
 
     public void undo() {
         if (!history.isEmpty()) {

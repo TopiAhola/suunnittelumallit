@@ -4,13 +4,15 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Arrays;
+import java.util.Map;
 
 public class Gui extends Application {
 
@@ -20,7 +22,8 @@ public class Gui extends Application {
     private ColorBox colorBox2;
     private ColorBox colorBox3;
     private CheckBox checkBox;
-
+    private Stage historyWindow;
+    private int historySelected;
 
     public void start(Stage stage) {
 
@@ -56,7 +59,7 @@ public class Gui extends Application {
         historyButton.setOnAction(e -> {
             if(e.getEventType() == ActionEvent.ACTION) {
                 System.out.println("History button clicked");
-
+                showHistoryWindow();
             }
         });
 
@@ -82,6 +85,9 @@ public class Gui extends Application {
             }
         });
 
+        //historywindow TODO: methods to update
+        historyWindow = new Stage();
+        historySelected = 0;
 
         stage.setScene(scene);
         stage.setTitle("Memento Pattern Example");
@@ -97,8 +103,56 @@ public class Gui extends Application {
     }
 
     public void showHistoryWindow() {
-        Stage historyWindow = new Stage();
+        //Stage historyWindow = new Stage();
         historyWindow.setTitle("History");
+        historySelected = 0; //reset selection
+
+        // Insets for margin and padding
+        Insets insets = new Insets(10, 10, 10, 10);
+
+        //button area for ui
+        Button loadHistoryButton = new Button("Load");
+        loadHistoryButton.setOnAction( (e)->{controller.loadHistory(historySelected); });
+        Label loadExplainer = new Label("Select history and click Load");
+        VBox buttonArea = new VBox(loadExplainer, loadHistoryButton);
+        buttonArea.setPadding(insets);
+
+        //VBox for listing histories
+        ListView<HBox> historyList = new ListView<>();
+
+        int currentHistoryIndex = controller.getCurrentHistoryIndex();
+        Map<Integer,IMemento> history = controller.getHistory();
+
+        //make rows from states add to list
+        for(int index : history.keySet()) {
+            Memento state = (Memento) history.get(index);
+            String options = Arrays.toString(state.getOptions());
+            boolean selected = state.isSelected();
+
+            Label infoLabel = new Label("Index: " +index +" State: " +options +" "+ selected);
+
+            //make a row of data
+            HBox listRow = new HBox(infoLabel);
+            //TODO: set selected index to variable for Load method
+
+            listRow.setOnMouseClicked((e)-> {
+                historySelected = index;
+                System.out.println("Selected index: "+historySelected);
+
+            });
+
+            //historyList.getItems().add(listCell);
+            historyList.getItems().add(listRow);
+        }
+
+
+        //VBox layout for window
+        VBox historyWindowLayout = new VBox(buttonArea, historyList);
+        historyWindowLayout.setPadding(insets);
+
+        //set layout to scene
+        Scene historyScene = new Scene(historyWindowLayout);
+        historyWindow.setScene(historyScene);
         historyWindow.show();
 
     }
