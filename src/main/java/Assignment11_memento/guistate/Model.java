@@ -35,7 +35,7 @@ public class Model {
     // method to restore the state of the model
     public void restoreState(IMemento memento) {
         Memento selectionMemento = (Memento) memento;
-        options = selectionMemento.getOptions();
+        options = selectionMemento.getOptions().clone(); //.clone auttaa?
         System.out.println("options: " + options[0] + " " + options[1] + " " + options[2]);
         isSelected = selectionMemento.isSelected();
         System.out.println("isSelected: " + isSelected);

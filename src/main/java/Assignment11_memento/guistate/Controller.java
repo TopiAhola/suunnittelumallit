@@ -8,6 +8,9 @@ public class Controller {
     private Map<Integer,IMemento> history; // Memento history
     private int currentHistoryIndex;
 
+
+    private IMemento currentState;
+
     public Controller(Gui gui) {
         this.model = new Model();
         this.gui = gui;
@@ -99,7 +102,7 @@ public class Controller {
 
 
     private void saveToHistory() {
-        IMemento currentState = model.createMemento();
+
 
         //erase future redo states if they exist
         if (currentHistoryIndex < history.size()) {
@@ -109,12 +112,13 @@ public class Controller {
                 System.out.println("Removed state: " +i);
             }
 
-
-
 /*            //remove from end of list
             System.out.println("Remove from history: " + (currentHistoryIndex+1) + " - " + (history.size()-1) );
             history.subList(currentHistoryIndex + 1, history.size()).clear();*/
         }
+
+        IMemento currentState = model.createMemento();
+
 
         //increase index by 1
         currentHistoryIndex++;
