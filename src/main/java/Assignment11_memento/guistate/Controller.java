@@ -51,7 +51,7 @@ public class Controller {
             //step 1 index to past
             if(currentHistoryIndex > 0 ) {
                 currentHistoryIndex = currentHistoryIndex - 1;
-                System.out.println("Sep back to: "+ currentHistoryIndex);
+                System.out.println("Step back to: "+ currentHistoryIndex);
 
 
                 IMemento previousState = history.get(currentHistoryIndex);
@@ -61,6 +61,8 @@ public class Controller {
 
             } else{
                 System.out.println("index is 0: " + currentHistoryIndex);
+                IMemento previousState = history.get(currentHistoryIndex);
+                model.restoreState(previousState);
             }
 
         } else  {
@@ -104,7 +106,7 @@ public class Controller {
         }
 
         //
-        history.add(currentState);
+        history.addLast(currentState);
         currentHistoryIndex = history.size()-1;
         System.out.println("Added history index: " + currentHistoryIndex +" history size: " +history.size());
     }
