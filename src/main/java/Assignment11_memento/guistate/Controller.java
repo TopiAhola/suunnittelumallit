@@ -1,18 +1,17 @@
 package Assignment11_memento.guistate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Controller {
     private Model model;
     private Gui gui;
-    private List<IMemento> history; // Memento history
+    private Map<Integer,IMemento> history; // Memento history
     private int currentHistoryIndex;
 
     public Controller(Gui gui) {
         this.model = new Model();
         this.gui = gui;
-        this.history = new ArrayList<>();
+        this.history = new TreeMap<>();
         this.currentHistoryIndex = 0;
     }
 
@@ -49,25 +48,27 @@ public class Controller {
         if (!history.isEmpty()) {
 
             //step 1 index to past
-            if(currentHistoryIndex > 0 ) {
+            if(currentHistoryIndex > 1 ) {
                 currentHistoryIndex = currentHistoryIndex - 1;
                 System.out.println("Step back to: "+ currentHistoryIndex);
 
-
-                IMemento previousState = history.get(currentHistoryIndex);
-
-                model.restoreState(previousState);
-
-
             } else{
-                System.out.println("index is 0: " + currentHistoryIndex);
-                IMemento previousState = history.get(currentHistoryIndex);
-                model.restoreState(previousState);
+                System.out.println("index is 1: " + currentHistoryIndex);
+
             }
+
+
+            IMemento previousState = history.get(currentHistoryIndex);
+            model.restoreState(previousState);
+
+            //logging
+            Memento printoutmemento = (Memento)previousState;
+            System.out.println("Current state is:" +previousState.toString() +printoutmemento.getOptions().toString() +printoutmemento.isSelected());
 
         } else  {
             System.out.println("No history");
         }
+
         gui.updateGui();
     }
 
@@ -75,18 +76,21 @@ public class Controller {
         if (!history.isEmpty()) {
 
             //step 1 index to future
-            if(currentHistoryIndex < history.size() -1 ) {
+            if(currentHistoryIndex < history.size() ) {
                 currentHistoryIndex = currentHistoryIndex + 1;
 
                 System.out.println("Step forward to: " + currentHistoryIndex);
 
             } else {
-                System.out.println("No more future history");
+                System.out.println("No more future history at: " + currentHistoryIndex);
             }
 
             IMemento nextState = history.get(currentHistoryIndex);
             model.restoreState(nextState);
 
+            //logging
+            Memento printoutmemento = (Memento) nextState;
+            System.out.println("Current state is:" +nextState.toString() +printoutmemento.getOptions().toString() +printoutmemento.isSelected());
         } else  {
             System.out.println("No history");
         }
@@ -98,16 +102,30 @@ public class Controller {
         IMemento currentState = model.createMemento();
 
         //erase future redo states if they exist
-        if (currentHistoryIndex < history.size() - 1) {
+        if (currentHistoryIndex < history.size()) {
+            int originalHistorySize = history.size();
+            for (int i = currentHistoryIndex+1; i <= originalHistorySize; i++) {
+                history.remove(i);
+                System.out.println("Removed state: " +i);
+            }
 
-            //remove from end of list
+
+
+/*            //remove from end of list
             System.out.println("Remove from history: " + (currentHistoryIndex+1) + " - " + (history.size()-1) );
-            history.subList(currentHistoryIndex + 1, history.size()).clear();
+            history.subList(currentHistoryIndex + 1, history.size()).clear();*/
         }
 
-        //
-        history.addLast(currentState);
-        currentHistoryIndex = history.size()-1;
+        //increase index by 1
+        currentHistoryIndex++;
+
+        //logging
+        Memento printoutmemento = (Memento) currentState;
+        System.out.println("Saved new state is:" +currentState.toString() +printoutmemento.getOptions().toString() +printoutmemento.isSelected());
+
+        //put next state to history
+        history.put(currentHistoryIndex, currentState);
+        //currentHistoryIndex = history.size()-1;
         System.out.println("Added history index: " + currentHistoryIndex +" history size: " +history.size());
     }
 }
