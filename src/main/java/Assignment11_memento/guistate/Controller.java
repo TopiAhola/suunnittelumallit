@@ -57,6 +57,10 @@ public class Controller {
 
     public void loadHistory(int index){
         System.out.println("loadHistory: "+index);
+        IMemento targetState = history.get(index);
+        model.restoreState(targetState);
+        currentHistoryIndex = index;
+        gui.updateGui();
     }
 
 
