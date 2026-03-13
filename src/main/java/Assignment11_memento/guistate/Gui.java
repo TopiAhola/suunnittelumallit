@@ -66,7 +66,7 @@ public class Gui extends Application {
         });
 
         // create a VBox that contains the HBox and the CheckBox
-        VBox vBox = new VBox(hBox, checkBox, label, historyButton);
+        VBox vBox = new VBox(hBox, checkBox, label, label2, historyButton);
         // call controller when the CheckBox is clicked
         checkBox.setOnAction(event -> {
             controller.setIsSelected(checkBox.isSelected());
