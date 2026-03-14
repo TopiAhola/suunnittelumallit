@@ -1,5 +1,7 @@
 package Assignment12_proxy;
 
+import Assignment12_proxy.documents.DocumentInterface;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -38,7 +40,7 @@ public class Main {
             try {
                 System.out.println(library.get(i).getContent(user1));
             } catch (AccessDeniedException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Exception message: " +e.getMessage());
             }
 
         }
@@ -46,7 +48,7 @@ public class Main {
             try {
                 System.out.println(library.get(i).getContent(user1));
             } catch (AccessDeniedException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Exception message: " + e.getMessage());
             }
         }
 
@@ -55,7 +57,7 @@ public class Main {
             try {
                 System.out.println(library.get(i).getContent(user2));
             } catch (AccessDeniedException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Exception message: " +e.getMessage());
             }
 
         }
@@ -63,7 +65,7 @@ public class Main {
             try {
                 System.out.println(library.get(i).getContent(user2));
             } catch (AccessDeniedException e) {
-                System.out.println(e.getMessage());
+                System.out.println("Exception message: " +e.getMessage());
             }
         }
 
