@@ -20,6 +20,10 @@ public class DocumentProxy implements DocumentInterface {
 
     }
 
+    public DocumentProxy (Document rd){
+        this.realDocument = rd;
+    }
+
     @Override
     public int getId() {
         return realDocument.id;

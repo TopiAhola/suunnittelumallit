@@ -2,10 +2,7 @@ package Assignment12_proxy;
 
 import Assignment12_proxy.documents.DocumentInterface;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AccessControlService {
 
@@ -16,6 +13,7 @@ public class AccessControlService {
     static AccessControlService instance;
 
     public static AccessControlService getInstance(){
+        if(instance == null) instance = new AccessControlService();
         return instance;
     }
 
@@ -24,11 +22,18 @@ public class AccessControlService {
     }
 
     public boolean isAllowed(String username, int documentId){
-        return accessRights.get(username).contains(documentId);
+        return accessRights.get(username) != null && accessRights.get(username).contains(documentId);
     }
 
     public void giveAccess(String username, int documentId){
+        if (this.accessRights.get(username) == null){
+            this.accessRights.put(username, new HashSet<Integer>());
+            this.accessRights.get(username).add(documentId);
 
+        } else {
+            this.accessRights.get(username).add(documentId);
+
+        }
     }
 
     public void removeAccess(String username, int documentId){
