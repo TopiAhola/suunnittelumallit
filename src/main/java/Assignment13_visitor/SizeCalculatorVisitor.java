@@ -14,11 +14,20 @@ public class SizeCalculatorVisitor implements FileSystemVisitor{
     }
 
 
-    public void visit(Directory target){
+    public long getSize(FileSystemElement target){
+        totalSize = 0;
+        target.accept(this);
+        return totalSize;
+    }
 
+
+    public void visit(Directory target){
+        target.children.forEach(c -> c.accept(this));
     };
 
     public void visit(File target){
-
+        if(target != null ) {
+            this.totalSize += target.size;
+        }
     };
 }
