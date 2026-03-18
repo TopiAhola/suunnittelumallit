@@ -1,5 +1,7 @@
 package Assignment11_memento.guistate;
 
+import java.util.Arrays;
+
 public class Model {
     private int[] options = new int[3];
     private boolean isSelected;
@@ -35,9 +37,13 @@ public class Model {
     // method to restore the state of the model
     public void restoreState(IMemento memento) {
         Memento selectionMemento = (Memento) memento;
-        options = selectionMemento.getOptions().clone(); //.clone auttaa?
-        System.out.println("options: " + options[0] + " " + options[1] + " " + options[2]);
         isSelected = selectionMemento.isSelected();
+        options = Arrays.copyOf(
+                selectionMemento.getOptions(),
+                selectionMemento.getOptions().length
+        ); //.clone(); //.clone auttaa miksi?
+
+        System.out.println("options: " + options[0] + " " + options[1] + " " + options[2]);
         System.out.println("isSelected: " + isSelected);
         System.out.println("State restored");
     }
