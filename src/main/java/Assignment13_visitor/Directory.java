@@ -13,11 +13,24 @@ public class Directory implements FileSystemElement{
         children = new HashSet<>();
     }
 
+    public void addChild(FileSystemElement e){
+        this.children.add(e);
+    }
+
+    public void removeChild(FileSystemElement e){
+        this.children.remove(e);
+    }
+
 
     public void accept(FileSystemVisitor visitor){
         visitor.visit(this);
     }
 
+
+    @Override
+    public String toString(){
+        return "Directory " + this.name + " subfiles: " + this.children.size();
+    }
 
 
 
