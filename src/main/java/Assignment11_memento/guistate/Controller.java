@@ -27,10 +27,10 @@ public class Controller {
     }
 
     public void setOption(int optionNumber, int choice) {
- /*        //save initial state if not saved
+         //save initial state if not saved
         if(history.isEmpty()){
             saveToHistory();
-        }*/
+        }
         model.setOption(optionNumber, choice);
         saveToHistory();
         gui.updateGui();
@@ -41,10 +41,10 @@ public class Controller {
     }
 
     public void setIsSelected(boolean isSelected) {
- /*       //save initial state if not saved
+        //save initial state if not saved
         if(history.isEmpty()){
             saveToHistory();
-        }*/
+        }
         model.setIsSelected(isSelected);
         //save modified state
         saveToHistory();
