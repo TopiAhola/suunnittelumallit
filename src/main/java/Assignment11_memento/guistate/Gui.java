@@ -3,6 +3,7 @@ package Assignment11_memento.guistate;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -91,6 +92,7 @@ public class Gui extends Application {
         historyWindow = new Stage();
         historySelected = 0;
 
+        //scene.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
         stage.setScene(scene);
         stage.setTitle("Memento Pattern Example");
