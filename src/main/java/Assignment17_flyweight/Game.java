@@ -44,7 +44,7 @@ public class Game extends Application {
 
 
 
-        //get image
+        //Testing window
         try {
             InputStream inputStream = new FileInputStream("src/main/java/Assignment17_flyweight/images/building.bmp");
             Image testImage = new Image(inputStream);
@@ -63,7 +63,6 @@ public class Game extends Application {
             gc.drawImage(testImage, 100, 100);
             gc.stroke();
 
-
             //put elemets on root
             Group root = new Group();
             root.getChildren().add(canvas);
@@ -71,13 +70,31 @@ public class Game extends Application {
             Scene scene = new Scene(root);
             //display
             window.setScene(scene);
-            window.setTitle("Map");
+            window.setTitle("Test Map");
             window.show();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        //draw city map map
+        Parent root2 = new Pane( new CityMap(5,5).draw() );
+        Scene scene2 = new Scene(root2);
+        Stage cityWindow = new Stage();
+        cityWindow.setScene(scene2);
+        cityWindow.setTitle("City map");
+        cityWindow.show();
+
+
+        //draw wilderness map
+        Parent root3 = new Pane( new WildernessMap(5,5).draw() );
+        Scene scene3 = new Scene(root3);
+        Stage wildernessWindow = new Stage();
+        wildernessWindow.setScene(scene3);
+        wildernessWindow.setTitle("Wilderness map");
+        wildernessWindow.show();
+
 
     }
 }

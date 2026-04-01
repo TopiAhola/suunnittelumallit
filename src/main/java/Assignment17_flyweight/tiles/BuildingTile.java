@@ -5,7 +5,6 @@ public class BuildingTile extends Tile {
     public BuildingTile(){
         this.type = "Building";
         this.character = 'B';
-        this.graphic;
     }
 
 

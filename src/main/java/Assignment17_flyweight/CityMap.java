@@ -1,10 +1,7 @@
 package Assignment17_flyweight;
-import Assignment1_factory_method.tiles.BuildingTile;
-import Assignment1_factory_method.tiles.ForestTile;
-import Assignment1_factory_method.tiles.RoadTile;
-import Assignment1_factory_method.tiles.Tile;
 
 
+import Assignment17_flyweight.tiles.Tile;
 
 public class CityMap extends Map {
     //road, forest, and building.
@@ -14,8 +11,12 @@ public class CityMap extends Map {
         this.height = height;
         this.size = width * height;
         this.mapTiles = new Tile[width][height];
+        this.tileGraphicFactory = new TileGraphicFactory();
+
+        this.fillMapWithTiles();
 
     }
+
 
     public Tile createTile() {
         int randomNumber = (int) (Math.random() * 3);
@@ -23,16 +24,16 @@ public class CityMap extends Map {
         Tile tile = null;
         switch (randomNumber) {
             case 0: {
-                tile = new RoadTile();
+                tile = tileGraphicFactory.getBuildingTile();
                 break;
             }
             case 1: {
-                tile = new ForestTile();
+                tile = tileGraphicFactory.getForestTile();
                 break;
             }
 
             case 2: {
-                tile = new BuildingTile();
+                tile = tileGraphicFactory.getRoadTile();
                 break;
             }
         }

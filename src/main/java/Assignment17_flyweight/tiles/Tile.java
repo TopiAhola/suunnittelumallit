@@ -6,7 +6,7 @@ public abstract class Tile {
 
     public String type;
     public char character;
-    public String graphic;
+    public Image graphic;
 
 
     /**

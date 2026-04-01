@@ -1,10 +1,7 @@
 package Assignment17_flyweight;
 
-import Assignment1_factory_method.tiles.ForestTile;
-import Assignment1_factory_method.tiles.SwampTile;
-import Assignment1_factory_method.tiles.Tile;
-import Assignment1_factory_method.tiles.WaterTile;
 
+import Assignment17_flyweight.tiles.Tile;
 
 public class WildernessMap extends Map {
 
@@ -13,6 +10,9 @@ public class WildernessMap extends Map {
         this.height = height;
         this.size = width * height;
         this.mapTiles = new Tile[width][height];
+        this.tileGraphicFactory = new TileGraphicFactory();
+
+        this.fillMapWithTiles();
     }
 
 
@@ -23,16 +23,16 @@ public class WildernessMap extends Map {
         Tile tile = null;
         switch (randomNumber) {
             case 0: {
-                tile = new SwampTile();
+                tile = tileGraphicFactory.getSwampTile();
                 break;
             }
             case 1: {
-                tile = new WaterTile();
+                tile = tileGraphicFactory.getWaterTile();
                 break;
             }
 
             case 2: {
-                tile = new ForestTile();
+                tile = tileGraphicFactory.getForestTile();
                 break;
             }
         }

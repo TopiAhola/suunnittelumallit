@@ -1,6 +1,6 @@
 package Assignment17_flyweight.tiles;
 
-public enum TileGraphic {
+public enum GraphicType {
     building("src/main/java/Assignment17_flyweight/images/building.bmp"),
     forest("src/main/java/Assignment17_flyweight/images/forest.bmp"),
     road("src/main/java/Assignment17_flyweight/images/road.bmp"),
@@ -8,9 +8,9 @@ public enum TileGraphic {
     tile("src/main/java/Assignment17_flyweight/images/tile.bmp"),
     water("src/main/java/Assignment17_flyweight/images/water.bmp");
 
-    public String filePath;
+    public final String filePath;
 
-    TileGraphic(String filepath){
-
+    GraphicType(String path){
+        this.filePath = path;
     };
 }
