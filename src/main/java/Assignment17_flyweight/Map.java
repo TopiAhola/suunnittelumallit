@@ -56,7 +56,7 @@ public abstract class Map {
             for (int tileY = 0; tileY < height; tileY++) {
 
                 //draw image at coordinates (image, x ,y)
-                gc.drawImage(mapTiles[tileX][tileY].graphic, tileX*100, tileY*100);
+                gc.drawImage(mapTiles[tileX][tileY].getImage(), tileX*100, tileY*100);
                 gc.stroke();
 
             }

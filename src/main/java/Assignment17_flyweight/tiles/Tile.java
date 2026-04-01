@@ -2,11 +2,11 @@ package Assignment17_flyweight.tiles;
 
 import javafx.scene.image.Image;
 
-public abstract class Tile {
+public abstract class Tile implements ImageFlyweight {
 
     public String type;
     public char character;
-    public Image graphic;
+    private Image graphic;
 
 
     /**
@@ -23,8 +23,12 @@ public abstract class Tile {
         return this.type;
     }
 
+    @Override
+    public Image getImage() {
+        return this.graphic;
+    }
 
-
-
-
+    public void setImage(Image im){
+        this.graphic = im;
+    }
 }

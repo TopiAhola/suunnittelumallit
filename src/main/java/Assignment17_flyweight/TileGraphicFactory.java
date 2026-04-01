@@ -30,35 +30,35 @@ public class TileGraphicFactory {
 
     public Tile getBuildingTile(){
         Tile tile = new BuildingTile();
-        tile.graphic = graphics.get(GraphicType.building);
+        tile.setImage( graphics.get(GraphicType.building) );
 
         return tile;
     }
 
     public Tile getForestTile(){
         Tile tile = new ForestTile();
-        tile.graphic = graphics.get(GraphicType.forest);
+        tile.setImage( graphics.get(GraphicType.forest) );
 
         return tile;
     }
 
     public Tile getRoadTile(){
         Tile tile = new RoadTile();
-        tile.graphic = graphics.get(GraphicType.road);
+        tile.setImage( graphics.get(GraphicType.road) );
 
         return tile;
     }
 
     public Tile getSwampTile(){
         Tile tile = new SwampTile();
-        tile.graphic = graphics.get(GraphicType.swamp);
+        tile.setImage( graphics.get(GraphicType.swamp) );
 
         return tile;
     }
 
     public Tile getWaterTile(){
         Tile tile = new WaterTile();
-        tile.graphic = graphics.get(GraphicType.water);
+        tile.setImage( graphics.get(GraphicType.water) );
 
         return tile;
     }
