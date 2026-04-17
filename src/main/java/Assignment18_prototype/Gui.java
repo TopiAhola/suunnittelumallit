@@ -24,11 +24,17 @@ public class Gui extends Application {
 
     Controller controller = new Controller();
 
+    private Stage addBooksToRecommendationWindow;
+    private boolean showBooksToRecommendationWindow;
+
 
     private Stage recommendationWindow;
+    private Recommendation recommendationSelected;
+
+
     private Stage bookWindow;
     private Book bookSelected;
-    private Recommendation recommendationSelected;
+
 
     List<Book> books;
     List<Recommendation> recommendations;
@@ -57,6 +63,7 @@ public class Gui extends Application {
             bookWindow.setScene(getBookListContent());
             recommendationWindow.show();
             bookWindow.show();
+
         }
 
 
@@ -86,6 +93,28 @@ public class Gui extends Application {
                 updateGui();
             });
 
+            Button addBooksToRecButton = new Button("Add books to recommendation");
+            addBooksToRecButton.setOnAction((e) -> {
+                System.out.println("Show BooksToRecommendationWindow");
+                if (recommendationSelected != null && recommendationSelected.getBooks().contains(bookSelected)){
+                    recommendationSelected.removeBook("");
+                }
+                updateGui();
+            });
+
+            Button removeBooksFromRecButton = new Button("Remove book from recommendation");
+            removeBooksFromRecButton.setOnAction((e) -> {
+                System.out.println("removeBooksFromRecButton");
+                if (recommendationSelected != null){
+                    controller.removeRecommendation(recommendationSelected);
+                    recommendationSelected = null;
+                }
+                updateGui();
+            });
+
+
+
+
             Label loadExplainer = new Label("Select recommendation to see books!");
             String name = recommendationSelected != null ? recommendationSelected.getName() : "none";
             Label currentIndexLabel = new Label("Selected: " +name);
@@ -93,9 +122,6 @@ public class Gui extends Application {
 
             //VBox for listing
             ListView<HBox> recList = new ListView<>();
-
-            //VBox for listing
-            ListView<HBox> booksInRec = new ListView<>();
 
             //make rows from states add to list
             for (Recommendation rec : recommendations) {
@@ -108,11 +134,40 @@ public class Gui extends Application {
                 listRow.setOnMouseClicked((e) -> {
                     recommendationSelected = rec;
                     System.out.println("Selected recommendation: " + rec);
-
+                    updateGui();
 
                 });
 
                 recList.getItems().add(listRow);
+            }
+
+            //make list of books in rec
+            //VBox for listing
+            ListView<HBox> booksInRec = new ListView<>();
+
+            //make rows from states add to list
+            if (recommendationSelected != null) {
+                for (Book b : recommendationSelected.getBooks()) {
+                    String author = b.getAuthor();
+                    String title = b.getTitle();
+                    String genre = b.getGenre();
+                    Date published = b.getPublished();
+
+                    //make a row of data
+                    Label infoLabel = new Label("Title: " + title + " Author: " + author + "Genre: " + genre);
+                    Label dateLabel = new Label(published.toString());
+                    VBox tableRow = new VBox(infoLabel, dateLabel);
+                    HBox listRow = new HBox(tableRow);
+
+                    listRow.setOnMouseClicked((e) -> {
+                        bookSelected = b;
+                        System.out.println("Selected book: " + bookSelected);
+                        updateGui();
+                    });
+
+                    //historyList.getItems().add(listCell);
+                    booksInRec.getItems().add(listRow);
+                }
             }
 
 
@@ -134,14 +189,28 @@ public class Gui extends Application {
             return new Scene(recWindowlayout);
         }
 
-        public Scene getBookListContent(){
+
+    /**
+     * Creates Scene for books window
+     * @return
+     */
+    public Scene getBookListContent(){
             // Insets for margin and padding
             Insets insets = new Insets(10, 10, 10, 10);
+
+            //fields for new book
+            TextField authorField = new TextField(); authorField.setPromptText("Author");
+            TextField titleField = new TextField(); titleField.setPromptText("Title");
+            TextField genreField = new TextField(); genreField.setPromptText("Genre");
+            TextField dateField = new TextField(); dateField.setPromptText("Date");
+            HBox insertFields = new HBox(authorField,titleField,genreField,dateField);
 
             //button area for ui
             Button addBookButton = new Button("Add book");
             addBookButton.setOnAction((e) -> {
-
+                controller.addBook(authorField.getText(),titleField.getText(),genreField.getText(),dateField.getText());
+                authorField.setText(""); titleField.setText(""); genreField.setText(""); dateField.setText("");
+                updateGui();
             });
 
             Button deleteBookButton = new Button("Delete book");
@@ -158,15 +227,11 @@ public class Gui extends Application {
 
             String selectedTitle = bookSelected != null ? bookSelected.getTitle() : "none";
             Label currentIndexLabel = new Label("Selected book: " + selectedTitle);
-            VBox buttonArea = new VBox(loadExplainer, currentIndexLabel, addBookButton, deleteBookButton);
+            VBox buttonArea = new VBox(loadExplainer, addBookButton, insertFields, deleteBookButton, currentIndexLabel);
             buttonArea.setPadding(insets);
 
             //VBox for listing
             ListView<HBox> bookList = new ListView<>();
-
-
-
-            //clear previou
 
             //make rows from states add to list
             for (Book b : books) {
@@ -184,6 +249,7 @@ public class Gui extends Application {
                 listRow.setOnMouseClicked((e) -> {
                     bookSelected = b;
                     System.out.println("Selected book: " + bookSelected);
+                    updateGui();
                 });
 
                 //historyList.getItems().add(listCell);

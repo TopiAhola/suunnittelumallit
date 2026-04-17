@@ -1,5 +1,6 @@
 package Assignment18_prototype;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,8 +41,20 @@ public class Controller {
         return recommendations;
     }
 
-    public void addBook(Book book){
-        books.add(book);
+    public void addBook( String author,String title,String genre,String published){
+        try {
+            long publishedMillis = java.util.Date.parse(published);
+
+            Date publishedDate = new Date(publishedMillis);
+
+            books.add(new Book(author,title,genre,publishedDate));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Date publishedDate = new Date();
+            books.add(new Book(author, title, genre, publishedDate));
+        }
+
     }
 
     public void removeBook(Book book){
