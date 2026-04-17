@@ -93,11 +93,13 @@ public class Gui extends Application {
                 updateGui();
             });
 
+
+
             Button addBooksToRecButton = new Button("Add books to recommendation");
             addBooksToRecButton.setOnAction((e) -> {
-                System.out.println("Show BooksToRecommendationWindow");
-                if (recommendationSelected != null && recommendationSelected.getBooks().contains(bookSelected)){
-                    recommendationSelected.removeBook("");
+                System.out.println("addBooksToRecButton");
+                if (recommendationSelected != null && bookSelected != null){
+                    recommendationSelected.addBook(bookSelected);
                 }
                 updateGui();
             });
@@ -105,19 +107,32 @@ public class Gui extends Application {
             Button removeBooksFromRecButton = new Button("Remove book from recommendation");
             removeBooksFromRecButton.setOnAction((e) -> {
                 System.out.println("removeBooksFromRecButton");
-                if (recommendationSelected != null){
-                    controller.removeRecommendation(recommendationSelected);
-                    recommendationSelected = null;
+                if (recommendationSelected != null && bookSelected != null){
+                    controller.removeFromRecommendation(bookSelected,recommendationSelected);
+                    bookSelected = null;
                 }
                 updateGui();
             });
 
-
-
-
+            //left side elements
             Label loadExplainer = new Label("Select recommendation to see books!");
             String name = recommendationSelected != null ? recommendationSelected.getName() : "none";
-            Label currentIndexLabel = new Label("Selected: " +name);
+            Label currentIndexLabel = new Label("Recommendation selected: " +name);
+
+            TextField renameField = new TextField();
+            renameField.setPromptText("New name");
+            TextField targetAudienceField = new TextField();
+            targetAudienceField.setPromptText("Target audience");
+
+
+            Button renameRecButton = new Button("Rename recommendation");
+            renameRecButton.setOnAction((e) -> {
+                System.out.println("Rename rec");
+                if (recommendationSelected != null && !renameField.getText().isBlank() ){
+                    controller.renameRecommendation(recommendationSelected, renameField.getText(), targetAudienceField.getText());
+                }
+                updateGui();
+            });
 
 
             //VBox for listing
@@ -140,6 +155,9 @@ public class Gui extends Application {
 
                 recList.getItems().add(listRow);
             }
+
+            //right side elements
+            Label currentBookLabel = new Label("Selected book: " + (bookSelected != null ? bookSelected.getTitle() : ""));
 
             //make list of books in rec
             //VBox for listing
@@ -171,18 +189,26 @@ public class Gui extends Application {
             }
 
 
-            //VBox for buttons
-            VBox buttonArea = new VBox(loadExplainer, currentIndexLabel, cloneRecButton, deleteRecButton);
+            //VBox for left side list
+            VBox buttonArea = new VBox(loadExplainer, currentIndexLabel, cloneRecButton, deleteRecButton, renameRecButton,renameField, targetAudienceField);
             buttonArea.setPadding(insets);
 
+            //VBox for right side book list
+            VBox buttonArea2 = new VBox(currentBookLabel,addBooksToRecButton, removeBooksFromRecButton);
+            buttonArea.setPadding(insets);
+
+            VBox leftSide = new VBox(buttonArea,recList);
+            VBox rightSide = new VBox(buttonArea2, booksInRec);
+
+
             //Hbox layout for window
-            HBox parallelLists = new HBox(recList, booksInRec);
+            HBox parallelLists = new HBox(leftSide, rightSide);
             parallelLists.setPrefWidth(800);
             recList.setPrefWidth(400);
             booksInRec.setPrefWidth(400);
 
             //Vbox for recs
-            VBox recWindowlayout = new VBox(buttonArea, parallelLists);
+            VBox recWindowlayout = new VBox(parallelLists);
             recWindowlayout.setPadding(insets);
 
             //set layout to scene

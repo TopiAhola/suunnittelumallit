@@ -57,6 +57,10 @@ public class Controller {
 
     }
 
+    public void removeFromRecommendation(Book book, Recommendation r){
+        r.books.remove(book);
+    }
+
     public void removeBook(Book book){
         this.books.remove( book );
         System.out.println("Removed"+book.title);
@@ -74,7 +78,17 @@ public class Controller {
     public void addRecommendation(Recommendation rec){
         if (rec != null) {
         this.recommendations.add(rec);
+        }
     }
+
+    public void renameRecommendation(Recommendation r, String name, String targetAudience){
+        if(name != null){
+            r.name = name;
+        }
+
+        if(!targetAudience.isBlank()){
+            r.targetAudience = targetAudience;
+        }
     }
 
 }
