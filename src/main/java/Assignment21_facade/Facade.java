@@ -1,7 +1,9 @@
-package Assignment20_facade;
-
+package Assignment21_facade;
 
 import java.io.IOException;
+
+
+
 
 /**
  * The method should send a HTTP GET request to the given URL, retrieve the JSON response, and extract the value of the given attribute name from the JSON.
@@ -12,28 +14,19 @@ import java.io.IOException;
  *
  * Finally, demonstrate that the Chuck Norris joke can still be retrieved using your facade. Also, show how the facade works with another API of your choice (e.g. https://api.fxratesapi.com/latest for the latest foreign exchange rates).
  */
-public class Main{
-    public static void main(String[] args) {
-
-        Facade facade = new Facade();
-        try {
-            String result = facade.getAttributeValueFromJson(
-                    "https://api.chucknorris.io/jokes/random",
-                    "value"
-            );
-            System.out.println(result);
+public class Facade {
 
 
-        } catch (IOException e) {
-            System.out.println("URL is invalid or the HTTP request failed");
+    private JokeClient jokeClient;
 
-        } catch (IllegalArgumentException e2) {
-            System.out.println("Attribute not found in JSON");
-
-        } catch (Exception e3) {
-            e3.printStackTrace();
-        }
-
-
+    public Facade(){
+        this.jokeClient = new JokeClient();
     }
+
+    String getAttributeValueFromJson(String urlString, String attributeName) throws IllegalArgumentException, IOException {
+
+
+    return null;
+    };
+
 }

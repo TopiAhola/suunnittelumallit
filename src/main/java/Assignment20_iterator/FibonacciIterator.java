@@ -1,6 +1,5 @@
-package Assignment19_iterator;
+package Assignment20_iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
