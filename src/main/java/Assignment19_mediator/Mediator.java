@@ -14,9 +14,9 @@ public class Mediator extends Application{
     public void start(Stage stage) throws Exception {
 
         clients = new HashMap<>(Map.of(
-               "Client1", new Client("Client1", this),
-                "Client2", new Client("Client2", this),
-                "Client3", new Client("Client3", this)
+               "Client1", new Client("Client1", this, new Stage()),
+                "Client2", new Client("Client2", this, new Stage()),
+                "Client3", new Client("Client3", this, new Stage())
 
         ));
 

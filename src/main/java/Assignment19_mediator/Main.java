@@ -1,10 +1,11 @@
 package Assignment19_mediator;
 
+import javafx.application.Application;
+
 public class Main {
     public static void main(String[] args) {
 
-        Mediator mediator = new Mediator();
-        mediator.start();
+        Application.launch(Mediator.class, "","");
 
     }
 
