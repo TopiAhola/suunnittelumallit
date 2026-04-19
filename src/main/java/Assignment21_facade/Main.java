@@ -34,6 +34,24 @@ public class Main{
             e3.printStackTrace();
         }
 
+        //https://api.fxratesapi.com/latest
+        try {
+            String result = facade.getAttributeValueFromJson(
+                    "https://api.fxratesapi.com/latest",
+                    "EUR"
+            );
+            System.out.printf("Rate of USD to EUR: %s", result);
+
+
+        } catch (IOException e) {
+            System.out.println("URL is invalid or the HTTP request failed");
+
+        } catch (IllegalArgumentException e2) {
+            System.out.println("Attribute not found in JSON");
+
+        } catch (Exception e3) {
+            e3.printStackTrace();
+        }
 
     }
 }
