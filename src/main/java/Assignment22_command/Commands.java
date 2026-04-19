@@ -12,8 +12,10 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute MoveCursorUpCommand");
+            editor.moveCursorUpCommand();
         }
     }
+
     class MoveCursorDownCommand implements Command {
         Editor editor;
 
@@ -23,8 +25,10 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute MoveCursorDownCommand");
+            editor.moveCursorDownCommand();
         }
     }
+
     class MoveCursorLeftCommand implements Command {
         Editor editor;
 
@@ -34,8 +38,10 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute MoveCursorLeftCommand");
+            editor.moveCursorLeftCommand();
         }
     }
+
     class MoveCursorRightCommand implements Command {
         Editor editor;
 
@@ -45,8 +51,10 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute MoveCursorRightCommand");
+            editor.moveCursorRightCommand();
         }
     }
+
     class TogglePixelCommand implements Command {
         Editor editor;
 
@@ -56,8 +64,10 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute TogglePixelCommand");
+            editor.togglePixelCommand();
         }
     }
+
     class GenerateCodeCommand implements Command {
         Editor editor;
 
@@ -67,6 +77,7 @@ public class Commands {
 
         public void execute(){
             System.out.println("Execute GenerateCodeCommand");
+            editor.generateCodeCommand();
         }
     }
 
