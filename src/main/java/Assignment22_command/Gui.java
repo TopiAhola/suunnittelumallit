@@ -97,13 +97,29 @@ public class Gui extends Application {
 
         //pane holding canvas with pixels on it
         Pane pixelMapPane = new Pane(getPixelCanvas());
+        pixelMapPane.setFocusTraversable(true);
+        pixelMapPane.setMinWidth(pixelMapPane.getWidth());
+        pixelMapPane.setMinHeight(pixelMapPane.getHeight());
 
+
+        //size window to fit canvas
+        this.stage.setMinWidth(pixelMapPane.getWidth());
+        this.stage.setMinHeight(pixelMapPane.getHeight());
 
         //put elemts to root
-        Parent root = new VBox(infoLabel, newEditorLabel, widthTextField, heightTextField, newEditorButton, pixelMapPane, generateCodeButton );
+        VBox root = new VBox(infoLabel, newEditorLabel, widthTextField, heightTextField, newEditorButton, pixelMapPane, generateCodeButton );
+
+        //size root to fit canvas
+        root.setMinWidth(pixelMapPane.getWidth());
+        root.setMinHeight(pixelMapPane.getHeight());
+
+        //set reziable
+
+        //create scene
+        Scene scene = new Scene(root);
+
 
         //set key commands for window
-        Scene scene = new Scene(root);
         scene.setOnMouseClicked(mouseEvent -> {
                     System.out.println(mouseEvent.getButton());
                 }
@@ -150,17 +166,19 @@ public class Gui extends Application {
     }
 
     private Canvas getPixelCanvas(){
-        int width = editor.getCursorXMax();
-        int height = editor.getCursorYMax();
+        int width = editor.getCursorXMax() + 1; //cursor postition starts from 0...
+        int height = editor.getCursorYMax() +1;
 
         int pixelSize = 100;
 
-        Canvas canvas = new Canvas(width * pixelSize, height * pixelSize);
+        Canvas canvas = new Canvas(width  * pixelSize, height * pixelSize);
+        canvas.setHeight((height + 1) * pixelSize);
+        canvas.setWidth((width +1) * pixelSize);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         //draw pixels
-        for (int x = 0; x < editor.getCursorXMax(); x++) {
-            for (int y = 0; y < editor.getCursorYMax(); y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int pixel = editor.getPixelArt()[y][x];
                 System.out.print(pixel);
                 if (pixel == 0) {
