@@ -5,6 +5,8 @@ import java.util.StringJoiner;
 
 public class Editor {
 
+    int width;
+    int height;
     int cursorX;
     int cursorY;
     int cursorXMax;
@@ -18,6 +20,8 @@ public class Editor {
 
 
     public Editor(int width, int height){
+        this.width = width;
+        this.height = height;
         cursorXMax = width - 1;
         cursorYMax = height - 1;
         cursorX = 0;
@@ -112,5 +116,13 @@ public class Editor {
 
     public int[][] getPixelArt() {
         return pixelArt;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

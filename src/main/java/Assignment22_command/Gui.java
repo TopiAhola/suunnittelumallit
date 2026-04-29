@@ -166,8 +166,9 @@ public class Gui extends Application {
     }
 
     private Canvas getPixelCanvas(){
-        int width = editor.getCursorXMax() + 1; //cursor postition starts from 0...
-        int height = editor.getCursorYMax() +1;
+        //cursor postition starts from 0...
+        int width = editor.getWidth();
+        int height = editor.getWidth();
 
         int pixelSize = 100;
 
